@@ -1,0 +1,47 @@
+
+<%= turbo_frame_tag order, class: "d-flex list-group-item py-2 border-start-0 border-end-0 row justify-content-between px-0" do %>
+    <%= tag.div class: "col-1 d-flex align-items-center" do %>
+        <%=tag.div class: 'form-check' do %>
+            <%= check_box_tag "order_ids[]", order.id, false, {class: 'checkboxes form-check-input', data: { 'selectall_target': 'checkbox', action: "change->selectall#toggleParent"}, form: :print_etiketki_form } %>
+            <%=tag.label class: 'form-check-label' do %><%= tag.b( order.id ) %><% end %>
+        <% end %>
+    <% end %>
+    <%= tag.div( order.status, class: "col-1" ) %>
+    <%= tag.div class: "col-5 d-flex flex-column" do %>
+        <div class="row">
+            <div class="col row"><div class="col-12">ID: <%= order.retail_uid %></div><div class="col-12">Status: <%= order.retail_status_title %></div></div>
+            <div class="col">Client: <%= order.api_client_data_value %></div>
+            <div class="col">Позиции: <%= order.items.count if order.items.present? %></div>
+        </div>
+        <div class="row mt-auto">
+            <%= link_to update_retail_order_path(order), class: 'btn btn-sm btn-outline-primary col-3', id: "update_retail_order_#{order.id}", 
+                data: {turbo_method: :post, turbo_confirm: "Запустить обновление заказа Retail?"}, title: 'Запустить обновление заказа Retail' do %>
+                Ret <%= reload_icon%>
+            <% end %>
+        </div>
+    <% end %>
+    <%= tag.div class: "col-4 d-flex flex-column" do %>
+        <div class="row">
+            <div class="col">Num: <%= order.refgo_num %></div>
+            <div class="col">Storage code: <%= order.storage_code %></div>
+            <div class="col">Status: <%= order.refgo_status_title %></div>
+        </div>
+        <div class="row mt-auto" id = "buttons_refgo_order_<%=order.id%>">
+            <%= link_to create_refgo_order_path(order), class: 'btn btn-sm btn-outline-primary col-5',
+             title: "Создать заказ Refgo", data: {turbo_method: :post, turbo_confirm: "Создать заказ Refgo?"} do %>
+            Create/Update
+            <%= arrow_right_icon%>
+            <% end %>
+            <%= link_to check_refgo_order_path(order), class: 'btn btn-sm btn-outline-primary col-3',
+            title: "Проверить заказ Refgo", data: {turbo_method: :post, turbo_confirm: "Проверить заказ Refgo?"} do %>
+            Check
+            <%= arrow_right_icon%>
+            <% end %>
+        </div>
+    <% end %>
+
+    <div class= "col-1 d-flex justify-content-end gap-2 align-items-center" id="buttons-<%=order.id%>">
+        <%= link_to edit_icon, edit_order_path(order), class: '', data: {turbo_frame: "_top"} %>
+        <%= link_to trash_icon, order, data: { "turbo-method": :delete, 'turbo-confirm': 'Are you sure?' }, class:"" %>
+    </div>
+<% end %>

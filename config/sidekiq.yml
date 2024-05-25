@@ -1,0 +1,18 @@
+:concurrency: 5
+
+:queues:
+    - default
+    - import_retail_order
+    - create_refgo
+    - check_refgo
+
+:scheduler:
+  :dynamic: true
+
+
+development:
+  :concurrency: 5
+staging:
+  :concurrency: 10
+production:
+  :concurrency: 20

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @refgo %>
+
+<div>
+  <%= link_to "Edit this refgo", edit_refgo_path(@refgo) %> |
+  <%= link_to "Back to refgos", refgos_path %>
+
+  <%= button_to "Destroy this refgo", @refgo, method: :delete %>
+</div>

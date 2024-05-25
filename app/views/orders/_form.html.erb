@@ -1,0 +1,88 @@
+<%= turbo_frame_tag order, class: "container" do %>
+  <%= form_with(model: order, class: "row") do |f| %>
+     <%= render "shared/errors", object: order %>
+      <div class="col-2">
+        <%= f.label :status%>
+        <%= f.select :status, Order::STATUS, {:include_blank => "Select"}, {:class => "form-select"} %>
+      </div>
+    <div class="col-2">
+      <%= f.label :retail_uid %>
+      <%= f.number_field :retail_uid, class: "form-control disabled", readonly: true %>
+    </div>
+    <div class="col-2">
+      <%= f.label :retail_status %>
+      <%# f.number_field :retail_status, class: "form-control disabled", readonly: true %>
+      <%= f.select :retail_status, StatusSetup.api_retail_order_statuses, {include_blank: false, prompt: "Select"}, {:class => "form-select"} %>
+    </div>
+
+    <div class="col-2">
+      <%= f.label :retail_client_uid %>
+      <%= f.number_field :retail_client_uid, class: "form-control disabled", readonly: true %>
+    </div>
+
+    <div class="col-2">
+      <%= f.label :sum%>
+      <%= f.text_field :sum, class: "form-control disabled", readonly: true %>
+    </div>
+
+    <div class="col-2">
+      <%= f.label :delivery_price %>
+      <%= f.text_field :delivery_price, class: "form-control disabled", readonly: true %>
+    </div>
+
+    <div class="col-2 form-check">
+      <%= f.label :prepaid %>
+      <%# f.check_box :prepaid, class: "form-check-input disabled", readonly: true %>
+      <%= order.prepaid if order.prepaid.present? %>
+    </div>
+
+    <div class="col-2">
+      <%= f.label :refgo_num%>
+      <%= f.text_field :refgo_num, class: "form-control disabled", readonly: true %>
+    </div>
+    <div class="col-2">
+      <%= f.label :refgo_status %>
+      <%= f.select :refgo_status, StatusSetup::REFGOSTATUS, {include_blank: false, prompt: "Select"}, {:class => "form-select"} %>
+      <%# f.text_field :refgo_status, class: "form-control disabled", readonly: true %>
+    </div>
+
+    <div class="col-2">
+      <%= f.label :storage_code%>
+      <%= f.text_field :storage_code, class: "form-control disabled", readonly: true %>
+    </div>
+
+    <div class="col-12 mt-3">
+      <%= f.label :items %>
+      <%# f.text_field :items, class: "form-control" %>
+      <table class="table">
+        <thead>
+          <th>item id</th>
+          <th>offer id</th>
+          <th>offer name</th>
+          <th>initial price</th>
+          <th>quantity</th>
+          <th>offer property</th>        
+        </thead>
+        <tbody>
+      <% order.api_items_data.each do |item|%>
+      <%# item.to_json %>
+        <tr><td colspan=4 class="d-none"><%= item.to_json %></td></tr>
+        <tr>
+          <td><%= item['id']%></td>
+          <td><%= item['offer']['id']%></td>
+          <td><%= item['offer']['name']%></td>
+          <td><%= item['initialPrice']%></td>
+          <td><%= item['quantity']%></td>
+          <td><%= item['offer']['properties'].to_s%></td>
+        </tr>
+      <% end if order.items.present?%>
+      </tbody>
+      </table>
+    </div>
+
+      <div class="col-12 mt-5 d-flex justify-content-start gap-2 align-items-center">
+        <%= f.submit class: "btn btn-primary", data: {turbo_frame: "_top"} %>
+        <%= link_to "Back", orders_path, class: "btn btn-outline-primary", data: {turbo_frame: "_top"} %>
+      </div>
+  <% end %>
+<% end %>

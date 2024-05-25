@@ -1,0 +1,44 @@
+<div class="card my-4 p-3  bg-body rounded shadow-sm">
+  <div class="card-header bg-body d-flex align-items-center justify-content-beetwen row">
+    <div class="card-info col-2">
+      <h1 class="h3 d-inline align-middle"><%= Order.model_name.human(count: 2)%></h1>
+    </div>
+    <div class="card-info col">
+      <%= search_form_for @search, {class: 'form-inline pl-0 pr-0 z-0'} do |f| %>
+        <div class="input-group">
+          <%= f.text_field :retail_uid_eq , placeholder: 'retail_uid', class: "form-control"%>
+          <%# f.select :retail_client_uid_eq, Order.client_list, { :include_blank => true }, :class => "form-select"%>
+          <%= button_tag(type: 'submit', :class => "btn btn-outline-primary") do %><%= search_icon %><% end %>
+          <%= link_to arrow_clockwise_icon, orders_path, class: 'btn btn-outline-dark d-flex justify-content-center align-items-center' %>
+        </div>
+      <% end %>
+    </div>
+    <div id= header_actions" class="col-3 card-actions d-grid gap-2 d-flex align-items-center justify-content-end">
+      <%= render "import_button"%>
+      <%# link_to "#{add_icon} #{Order.model_name.human}".html_safe, new_order_path, class: "btn btn-primary float-end mt-n1", 
+      data: {turbo_frame:  "_top" }, id: "add_new_button" %>
+    </div>
+  </div>
+  <div class="card-body">
+    <div id="datatables-orders_wrapper">
+
+        <div class="col-12 list-group list-group-striped">
+          <div class="row py-2 px-0 justify-content-between align-items-center text-center">
+            <%= div_check_box_tag_all %>
+            <%= tag.div( t( 'helpers.label.order.status'), class: 'col-1 fw-semibold' )%>
+            <%= tag.div( t( 'helpers.label.order.retail'), class: 'col-5 fw-semibold' )%>
+            <%= tag.div( t( 'helpers.label.refgo.refgo'), class: 'col-4 fw-semibold' )%>
+            <%= tag.div('', class: 'col fw-semibold')%>
+          </div>
+          <%= turbo_stream_from "orders" %>
+          <%= turbo_frame_tag 'orders', data: { } do %>
+              <%= render @orders %>
+          <% end %>
+        </div>
+
+    </div>
+    <div class="apple_pagination mt-3">
+      <%= will_paginate @orders %>
+    </div>
+  </div>
+</div>

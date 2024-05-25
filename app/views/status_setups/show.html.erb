@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @status_setup %>
+
+<div>
+  <%= link_to "Edit this status setup", edit_status_setup_path(@status_setup) %> |
+  <%= link_to "Back to status setups", status_setups_path %>
+
+  <%= button_to "Destroy this status setup", @status_setup, method: :delete %>
+</div>
