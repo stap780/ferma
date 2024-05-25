@@ -1,2 +1,6 @@
+<% if Retail.not_nil? && Refgo.not_nil?%>
 <%= link_to "#{add_icon} #{StatusSetup.model_name.human}".html_safe, new_status_setup_path, class: "btn btn-primary float-end mt-n1", 
       data: {turbo_frame: dom_id(StatusSetup.new) }, id: "add_new_button" %>
+<% else %>
+      <button type="button" class="btn btn-outline-danger" disabled>Настройте интеграции</button>
+<% end %>

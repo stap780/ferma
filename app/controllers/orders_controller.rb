@@ -3,9 +3,7 @@ class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update destroy create_refgo check_refgo update_retail ]
 
   # GET /orders or /orders.json
-  def index
-    @orders = Order.all
-    
+  def index    
     @search = Order.ransack(params[:q])
     @search.sorts = 'id desc' if @search.sorts.empty?
     @orders = @search.result.paginate(page: params[:page], per_page: 10)
