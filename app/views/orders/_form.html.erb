@@ -1,10 +1,13 @@
 <%= turbo_frame_tag order, class: "container" do %>
   <%= form_with(model: order, class: "row") do |f| %>
-     <%= render "shared/errors", object: order %>
-      <div class="col-2">
-        <%= f.label :status%>
-        <%= f.select :status, Order::STATUS, {:include_blank => "Select"}, {:class => "form-select"} %>
-      </div>
+    <%= render "shared/errors", object: order %>
+    <div class="col-12">
+      <%= "Client: #{order.api_client_data_value}" if order.retail_client_uid.present? %>
+    </div>
+    <div class="col-2">
+      <%= f.label :status%>
+      <%= f.select :status, Order::STATUS, {:include_blank => "Select"}, {:class => "form-select"} %>
+    </div>
     <div class="col-2">
       <%= f.label :retail_uid %>
       <%= f.number_field :retail_uid, class: "form-control disabled", readonly: true %>

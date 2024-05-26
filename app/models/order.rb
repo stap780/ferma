@@ -2,6 +2,8 @@ class Order < ApplicationRecord
     validates :retail_uid, uniqueness: true
     after_create_commit { broadcast_prepend_to "orders" }
     after_update_commit { broadcast_replace_to "orders" }
+    after_destroy_commit { broadcast_remove_to "orders" }
+
     after_commit :api_set_retail_status, only: [:update]
 
     STATUS = ['New','Process','Finish Retail','Error Retail','Refgo Error','Refgo Finish']
