@@ -1,7 +1,11 @@
-<%= turbo_frame_tag order, class: "container" do %>
+<%= turbo_frame_tag order do %>
+<div class="card my-4 p-3">
   <%= form_with(model: order, class: "row") do |f| %>
+    <div class="col-12 my-3">
+      <%= title %>
+    </div>
     <%= render "shared/errors", object: order %>
-    <div class="col-12">
+    <div class="col-12 my-3">
       <%= "Client: #{order.api_client_data_value}" if order.retail_client_uid.present? %>
     </div>
     <div class="col-2">
@@ -14,8 +18,8 @@
     </div>
     <div class="col-2">
       <%= f.label :retail_status %>
-      <%# f.number_field :retail_status, class: "form-control disabled", readonly: true %>
-      <%= f.select :retail_status, StatusSetup.api_retail_order_statuses, {include_blank: false, prompt: "Select"}, {:class => "form-select"} %>
+      <%= f.text_field :retail_status, class: "form-control disabled", readonly: true %>
+      <%# f.select :retail_status, StatusSetup.api_retail_order_statuses, {include_blank: false, prompt: "Select"}, {:class => "form-select"} %>
     </div>
 
     <div class="col-2">
@@ -36,7 +40,7 @@
     <div class="col-2 form-check">
       <%= f.label :prepaid %>
       <%# f.check_box :prepaid, class: "form-check-input disabled", readonly: true %>
-      <%= order.prepaid if order.prepaid.present? %>
+      <span class="btn disabled w-100 bg-secondary p-2 text-dark bg-opacity-25 border-0"><%=  order.prepaid.present? ? order.prepaid : 'false' %></span>
     </div>
 
     <div class="col-2">
@@ -45,8 +49,8 @@
     </div>
     <div class="col-2">
       <%= f.label :refgo_status %>
-      <%= f.select :refgo_status, StatusSetup::REFGOSTATUS, {include_blank: false, prompt: "Select"}, {:class => "form-select"} %>
-      <%# f.text_field :refgo_status, class: "form-control disabled", readonly: true %>
+      <%# f.select :refgo_status, StatusSetup::REFGOSTATUS, {include_blank: false, prompt: "Select"}, {:class => "form-select"} %>
+      <%= f.text_field :refgo_status, class: "form-control disabled", readonly: true %>
     </div>
 
     <div class="col-2">
@@ -88,4 +92,5 @@
         <%= link_to "Back", orders_path, class: "btn btn-outline-primary", data: {turbo_frame: "_top"} %>
       </div>
   <% end %>
+ </div>
 <% end %>

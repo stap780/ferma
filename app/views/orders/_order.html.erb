@@ -9,9 +9,10 @@
     <%= tag.div( order.status, class: "col-1" ) %>
     <%= tag.div class: "col-5 d-flex flex-column" do %>
         <div class="row">
-            <div class="col row"><div class="col-12">ID: <%= order.retail_uid %></div><div class="col-12">Status: <%= order.retail_status_title %></div></div>
+            <div class="col">ID: <%= order.retail_uid %></div>
             <div class="col">Client ID: <%= order.retail_client_uid %></div>
             <div class="col">Позиции: <%= order.items.count if order.items.present? %></div>
+            <div class="col-12">Status: <%= order.retail_status_title %></div>
         </div>
         <div class="row mt-auto">
             <%= link_to update_retail_order_path(order), class: 'btn btn-sm btn-outline-primary col-3', id: "update_retail_order_#{order.id}", 
