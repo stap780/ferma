@@ -73,12 +73,12 @@ class Order < ApplicationRecord
     end
 
     def retail_status_title
-        return '' if self.retail_status.nil?
+        return 'none' if self.retail_status.nil?
         StatusSetup.api_retail_order_statuses.select{|s| s.include?(self.retail_status)}.flatten[0]
     end
 
     def refgo_status_title
-        return '' if self.refgo_status.nil?
+        return 'none' if self.refgo_status.nil?
         StatusSetup::REFGOSTATUS.select{|s| s.include?(self.refgo_status)}.flatten[0]
     end
 
