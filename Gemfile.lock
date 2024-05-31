@@ -364,6 +364,7 @@ DEPENDENCIES
   redis (>= 4.0.1)
   rest-client
   retailcrm!
+  rubyzip
   selenium-webdriver
   sidekiq
   sidekiq-scheduler

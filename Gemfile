@@ -55,6 +55,7 @@ gem "sidekiq"
 gem "sidekiq-scheduler"
 gem 'rest-client'
 gem "addressable"
+gem 'rubyzip'
 
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
