@@ -52,6 +52,7 @@ gem 'retailcrm', github: 'stap780/api-client-ruby' # change api version to 5
 gem 'ransack'
 gem 'will_paginate', '~> 4.0'
 gem "sidekiq"
+gem "sidekiq-scheduler"
 gem 'rest-client'
 gem "addressable"
 
