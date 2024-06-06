@@ -148,6 +148,6 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.require(:order).permit(:refgo_status,:retail_status, :status, :retail_uid, :retail_client_uid, :refgo_num, :sum, :delivery_price, :prepaid, :storage_code, items: [] )
+      params.require(:order).permit(:retail_num, :refgo_status,:retail_status, :status, :retail_uid, :retail_client_uid, :refgo_num, :sum, :delivery_price, :prepaid, :storage_code, items: [] )
     end
 end

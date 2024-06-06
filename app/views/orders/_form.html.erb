@@ -1,10 +1,10 @@
 <%= turbo_frame_tag order do %>
 <div class="card my-4 p-3">
   <%= form_with(model: order, class: "row") do |f| %>
-    <div class="col-12 my-3">
-      <span class="h2"><%= title %></span>
-    </div>
     <%= render "shared/errors", object: order %>
+    <div class="col-12 my-3">
+      <span class="h2"><%= title %> <%= f.text_field :retail_num, class: "form-control disabled", readonly: true %></span>
+    </div>
     <div class="col-12 my-3">
       <%= "Client: #{order.api_client_data_value}" if order.retail_client_uid.present? %>
     </div>

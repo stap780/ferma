@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_15_094738) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_06_053154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_15_094738) do
     t.string "status"
     t.string "retail_status"
     t.string "refgo_status"
+    t.string "retail_num"
   end
 
   create_table "refgos", force: :cascade do |t|

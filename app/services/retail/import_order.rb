@@ -27,7 +27,8 @@ class Retail::ImportOrder < ApplicationService
                 sum: response['order']['totalSumm'],
                 items: get_item_ids(response['order']['items']),
                 prepaid: response['order']["prepaySum"] > 0 ? true : false ,
-                retail_status: response['order']['status']
+                retail_status: response['order']['status'],
+                retail_num: response['order']['number']
             }
             uid = response['order']['id']
             new_order = Order.create!(order_data.merge(status: 'New')) if !Order.find_by_retail_uid(uid).present?
