@@ -151,6 +151,7 @@ class Refgo::CreateUpdate < ApplicationService
                                 "ext_num" => r_o["number"],
                                 "barcode" => r_o["number"],
                                 "places" => r_o["customFields"]["kolichestvo_mest"],
+                                "cash_on_delivery_plan" => @order.prepaid ? '0' : r_o["summ"],
                                 "Client" => client_data,
                                 "Sender" => {
                                     "name" => "",

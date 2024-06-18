@@ -12,6 +12,10 @@ class Order < ApplicationRecord
         Order.attribute_names
     end
 
+    def self.ransackable_associations(auth_object = nil)
+        []
+    end
+    
     def self.client_list
         Order.all.map{|order| client = order.api_client_data; ["#{client["firstName"].to_s} #{client["email"]}", order.retail_client_uid] if client.present? }.uniq
     end

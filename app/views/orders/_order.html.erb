@@ -5,18 +5,18 @@
             <%= check_box_tag "order_ids[]", order.id, false, {class: 'checkboxes form-check-input', data: { 'selectall_target': 'checkbox', action: "change->selectall#toggleParent"}, form: :print_etiketki_form } %>
             <%=tag.label class: 'form-check-label' do %><%= tag.b( order.id ) %><% end %>
         <% end %>
-        <%=tag.div( order.strftime("%d/%m/%Y"), class: 'created_at_date') %>
-        <%=tag.div( order.strftime("%H:%m"), class: 'created_at_time') %>
+        <%=tag.div( order.created_at.strftime("%d/%m/%Y"), class: 'created_at_date') %>
+        <%=tag.div( order.created_at.strftime("%H:%m"), class: 'created_at_time') %>
     <% end %>
     <%= tag.div( order.status, class: "col-1" ) %>
     <%= tag.div class: "col-5 d-flex flex-column" do %>
         <div class="row">
-            <div class="co-4 d-flex flex-column"">
+            <div class="col d-flex flex-column">
                 <%=tag.div( "ID: #{order.retail_uid }", class: 'order_retail_uid') %>
-                <%=tag.div( "Номер: #{order.retail_num }", class: 'order_retail_num') %>
+                <%=tag.div( "Номер: #{order.retail_num }", class: 'order_retail_num fw-bold') %>
             </div>
-            <div class="col-4">Client ID: <%= order.retail_client_uid %></div>
-            <div class="col-4 d-flex flex-column">
+            <div class="col">Client ID: <%= order.retail_client_uid %></div>
+            <div class="col d-flex flex-column">
                 <%=tag.div( "Позиции: #{order.items.present? ? order.items.count : 0 }", class: '') %>
                 <%=tag.div( "Сумма: #{order.sum.present? ? order.sum : 0 }", class: '') %>
             </div>

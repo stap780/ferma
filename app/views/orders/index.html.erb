@@ -6,7 +6,7 @@
     <div class="card-info col">
       <%= search_form_for @search, {class: 'form-inline pl-0 pr-0 z-0'} do |f| %>
         <div class="input-group">
-          <%= f.text_field :retail_uid_or_retail_num_eq , placeholder: 'retail_uid', class: "form-control"%>
+          <%= f.text_field :retail_num_cont , placeholder: 'retail_num', class: "form-control"%>
           <%# f.select :retail_client_uid_eq, Order.client_list, { :include_blank => true }, :class => "form-select"%>
           <%= button_tag(type: 'submit', :class => "btn btn-outline-primary") do %><%= search_icon %><% end %>
           <%= link_to arrow_clockwise_icon, orders_path, class: 'btn btn-outline-dark d-flex justify-content-center align-items-center' %>
