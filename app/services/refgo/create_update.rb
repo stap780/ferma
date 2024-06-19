@@ -128,8 +128,8 @@ class Refgo::CreateUpdate < ApplicationService
                     "phone" => client['phones'][0]['number'],
                     "address" => r_o["delivery"]["address"]["city"].to_s+','+r_o["delivery"]["address"]["streetType"].to_s+' '+r_o["delivery"]["address"]["street"].to_s+' '+r_o["delivery"]["address"]["building"].to_s,
                     "send_date" => r_o["delivery"]["date"],
-                    "send_date_from" => r_o["delivery"]["date"]["from"],
-                    "send_date_to" => r_o["delivery"]["date"]["to"],
+                    "send_date_from" => r_o["delivery"]["time"]["from"],
+                    "send_date_to" => r_o["delivery"]["time"]["to"],
                     # "order_delivery_interval":"0001-01-01T00:15:00",
                     "comment" => r_o["delivery"]["address"]["text"]
                 }
