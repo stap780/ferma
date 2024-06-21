@@ -139,7 +139,7 @@ class Refgo::CreateUpdate < ApplicationService
                                             "sku" => item['offer']['article'], 
                                             "quantity" => item['quantity'], 
                                             "price" => item['initialPrice'], 
-                                            "cod" => item['offer']['id'], 
+                                            "cod" => @order.prepaid ? 0 : ( item['quantity'].to_i*item['initialPrice'].to_i ), 
                                             "term_condition" => get_term_condition(item), 
                                             "weight" => get_offer_weight(item) } 
                                         }
