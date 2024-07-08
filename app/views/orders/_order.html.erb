@@ -2,7 +2,7 @@
 <%= turbo_frame_tag order, class: "d-flex list-group-item py-2 border-start-0 border-end-0 row justify-content-between px-0" do %>
     <%= tag.div class: "col-1 d-flex flex-column" do %>
         <%=tag.div class: 'form-check' do %>
-            <%= check_box_tag "order_ids[]", order.id, false, {class: 'checkboxes form-check-input', data: { 'selectall_target': 'checkbox', action: "change->selectall#toggleParent"}, form: :print_etiketki_form } %>
+            <%= check_box_tag "order_ids[]", order.id, false, {class: 'checkboxes form-check-input', data: { 'selectall_target': 'checkbox', action: "change->selectall#toggleParent"}, form: :bulk_form } %>
             <%=tag.label class: 'form-check-label' do %><%= tag.b( order.id ) %><% end %>
         <% end %>
         <%=tag.div( order.created_at.strftime("%d/%m/%Y"), class: 'created_at_date') %>

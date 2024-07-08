@@ -88,13 +88,15 @@ class Order < ApplicationRecord
 
     def api_set_retail_status
         if self.refgo_status_previously_changed?
-            puts "changed"
+            puts "refgo_status_previously changed => true"
             api = Retailcrm.new(Retail.first.api_link, Retail.first.api_key)
             response_order_retail = api.orders_get(self.retail_uid, 'id').response
             r_order = response_order_retail['order']
             status = StatusSetup.linked_retail_status(self.refgo_status)
+            tarif = self.delivery_price
             if status
                 r_order['status'] = status
+                r_order['netCost'] = tarif
                 result = api.orders_edit(r_order).response
             end
         else 

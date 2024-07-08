@@ -21,21 +21,19 @@
   </div>
   <div class="card-body">
     <div id="datatables-orders_wrapper">
-
-        <div class="col-12 list-group list-group-striped">
-          <div class="row py-2 px-0 justify-content-between align-items-center text-center">
-            <%= div_check_box_tag_all %>
-            <%= tag.div( t( 'helpers.label.order.status'), class: 'col-1 fw-semibold' )%>
-            <%= tag.div( t( 'helpers.label.order.retail'), class: 'col-5 fw-semibold' )%>
-            <%= tag.div( t( 'helpers.label.refgo.refgo'), class: 'col-4 fw-semibold' )%>
-            <%= tag.div('', class: 'col fw-semibold')%>
-          </div>
-          <%= turbo_stream_from "orders" %>
-          <%= turbo_frame_tag 'orders', data: { } do %>
-              <%= render @orders %>
-          <% end %>
-        </div>
-
+      <div class="col-12 list-group list-group-striped" data-controller="selectall">
+      <div class="row py-2 px-0 justify-content-between align-items-center text-center">
+        <%= div_check_box_tag_all %>
+        <%= tag.div( t( 'helpers.label.order.status'), class: 'col-1 fw-semibold' )%>
+        <%= tag.div( t( 'helpers.label.order.retail'), class: 'col-5 fw-semibold' )%>
+        <%= tag.div( t( 'helpers.label.refgo.refgo'), class: 'col-4 fw-semibold' )%>
+        <%= tag.div('', class: 'col fw-semibold')%>
+      </div>
+      <%= turbo_stream_from "orders" %>
+      <%= turbo_frame_tag 'orders', data: { } do %>
+          <%= render @orders %>
+      <% end %>
+      </div>
     </div>
     <div class="apple_pagination mt-3">
       <%= will_paginate @orders %>
