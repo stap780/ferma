@@ -6,3 +6,7 @@ import_retail_order:
   cron: "05 * * * *" # every 5 minute
   class: "ImportRetailOrderScheduler"
   queue: "default"
+check_refgo_order:
+  cron: "05 * * * *" # every 5 minute
+  class: "CheckRefgoOrderScheduler"
+  queue: "default"
