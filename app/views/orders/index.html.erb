@@ -7,7 +7,7 @@
       <%= search_form_for @search, {class: 'form-inline pl-0 pr-0 z-0'} do |f| %>
         <div class="input-group">
           <%= f.text_field :retail_num_cont , placeholder: 'retail_num', class: "form-control"%>
-          <% f.select :retail_status_eq, StatusSetup.api_retail_order_statuses, { :include_blank => false, prompt: 'retail_status' }, :class => "form-select"%>
+          <%= f.select :retail_status_eq, StatusSetup.api_retail_order_statuses, { :include_blank => false, prompt: 'retail_status' }, :class => "form-select"%>
           <%= button_tag(type: 'submit', :class => "btn btn-outline-primary") do %><%= search_icon %><% end %>
           <%= link_to arrow_clockwise_icon, orders_path, class: 'btn btn-outline-dark d-flex justify-content-center align-items-center' %>
         </div>
