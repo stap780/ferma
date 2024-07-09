@@ -51,6 +51,7 @@ gem 'retailcrm', github: 'stap780/api-client-ruby' # change api version to 5
 
 gem 'ransack'
 gem 'will_paginate', '~> 4.0'
+gem 'will_paginate-bootstrap-style' #https://github.com/delef/will_paginate-bootstrap-style
 gem "sidekiq"
 gem "sidekiq-scheduler"
 gem 'rest-client'

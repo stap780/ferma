@@ -8,6 +8,7 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <meta name="turbo-prefetch" content="false">
   </head>
 
   <body>
@@ -17,14 +18,14 @@
     </header>
 
     <main class="container-fluid" style="margin-top: 58px;">
-      <div class="row">
-        <div id="our_flash" class="position-absolute z-1 start-50 translate-middle-x w-50" style="top: 60px;">
+        <div id="our_flash" class="position-fixed z-1 top-0 end-0 p-3 w-50">
           <%= render "shared/flash"%>
         </div>
+      <div class="row">
         <div class="col-md-3">
           <%= render 'layouts/sidebar' %>
         </div>
-        <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="col-md-9 ms-sm-auto col-lg-10 px-0">
           <%= yield %>
         </div>
       </div>

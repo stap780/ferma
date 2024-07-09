@@ -40,7 +40,12 @@ class Order < ApplicationRecord
     end
 
     def api_client_data_value
-        "#{self.api_client_data['firstName'].to_s} #{self.api_client_data['email'].to_s} #{self.api_client_data['phones'][0]['number'].to_s}" if !self.api_client_data.nil?
+        if !self.api_client_data.nil?
+            cl_data = self.api_client_data
+            "#{cl_data['firstName'].to_s} #{cl_data['email'].to_s} #{cl_data['phones'][0]['number'].to_s}"
+        else
+            ''
+        end
     end
 
     def api_order_data
