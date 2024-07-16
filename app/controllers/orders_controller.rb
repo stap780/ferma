@@ -52,7 +52,7 @@ class OrdersController < ApplicationController
 
   def import_last_retail
     retail = Retailcrm.new(Retail.first.api_link, Retail.first.api_key)
-    response = retail.orders.response
+    response = retail.orders({},50).response
     if response['success']
       retail_orders = response['orders']
       retail_orders.each_with_index do |retail_order, index|

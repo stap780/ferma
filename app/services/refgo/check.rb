@@ -5,9 +5,10 @@ class Refgo::Check < ApplicationService
     def initialize(order_id)
         @order = Order.find(order_id)
         @error_message = []
-        @link = Refgo.first.api_link
-        @login = Refgo.first.api_login
-        @passw = Refgo.first.api_password
+        ref = Refgo.first
+        @link = ref.api_link
+        @login = ref.api_login
+        @passw = ref.api_password
         @auth = 'Basic ' + Base64.encode64( "#{@login}:#{@passw}" ).chomp
         @headers = {"token" => nil, "Authorization" => @auth}
     end

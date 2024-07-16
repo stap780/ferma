@@ -121,6 +121,8 @@ class Refgo::CreateUpdate < ApplicationService
             puts "ne_sinkhronizirovat_so_sluzhboi_dostavki_test == false"
             client = @order.api_client_data
             if client.present?
+                send_date_from = r_o["delivery"]["time"].present? ? r_o["delivery"]["date"]+"T"+r_o["delivery"]["time"]["from"] : r_o["delivery"]["date"]+"T09:15:00"
+                send_date_to = r_o["delivery"]["time"].present? ? r_o["delivery"]["date"]+"T"+r_o["delivery"]["time"]["to"] : r_o["delivery"]["date"]+"T19:15:00"
                 puts "client present"
                 client_data = {
                     "name" => client["firstName"],
@@ -128,8 +130,8 @@ class Refgo::CreateUpdate < ApplicationService
                     "phone" => client['phones'][0]['number'],
                     "address" => r_o["delivery"]["address"]["city"].to_s+','+r_o["delivery"]["address"]["streetType"].to_s+' '+r_o["delivery"]["address"]["street"].to_s+' '+r_o["delivery"]["address"]["building"].to_s,
                     "send_date" => r_o["delivery"]["date"],
-                    "send_date_from" => r_o["delivery"]["date"]+"T"+r_o["delivery"]["time"]["from"],
-                    "send_date_to" => r_o["delivery"]["date"]+"T"+r_o["delivery"]["time"]["to"],
+                    "send_date_from" => send_date_from,
+                    "send_date_to" => send_date_to,
                     # "order_delivery_interval":"0001-01-01T00:15:00",
                     "comment" => r_o["delivery"]["address"]["text"]
                 }
