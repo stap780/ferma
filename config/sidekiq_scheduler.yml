@@ -5,8 +5,8 @@ log_files:
 import_retail_order:
   cron: "05 * * * *" # every 5 minute
   class: "ImportRetailOrderScheduler"
-  queue: "default"
+  queue: "import_retail_order"
 check_refgo_order:
   cron: "05 * * * *" # every 5 minute
   class: "CheckRefgoOrderScheduler"
-  queue: "default"
+  queue: "check_refgo"
