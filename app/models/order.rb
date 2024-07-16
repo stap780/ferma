@@ -112,7 +112,7 @@ class Order < ApplicationRecord
     end
 
     def create_refgo_if_need
-        if self.refgo_num.nil?
+        if !self.refgo_num.present?
             CreateRefgoJob.perform_later(self.id)
         end
     end

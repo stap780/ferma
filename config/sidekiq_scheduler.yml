@@ -3,10 +3,10 @@ log_files:
   class: "CreateLogFilesScheduler"
   queue: "default"
 import_retail_order:
-  cron: "05 * * * *" # every 5 minute
+  cron: "*/5 * * * *" # every 5 minute
   class: "ImportRetailOrderScheduler"
   queue: "import_retail_order"
 check_refgo_order:
-  cron: "05 * * * *" # every 5 minute
+  cron: "*/5 * * * *" # every 5 minute
   class: "CheckRefgoOrderScheduler"
   queue: "check_refgo"
