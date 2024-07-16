@@ -1,4 +1,4 @@
-lock "~> 3.18.1"
+lock "~> 3.19.1"
 
 server '213.226.127.175', roles: %w{app db web}
 
