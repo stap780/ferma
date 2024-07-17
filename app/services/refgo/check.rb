@@ -21,6 +21,7 @@ class Refgo::Check < ApplicationService
             if @error_message.size < 1
                 [true, '']
             else
+                puts "Refgo::Check @error_message => #{@error_message}"
                 [false, @error_message]
             end
         end
