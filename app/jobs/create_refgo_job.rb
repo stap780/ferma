@@ -8,7 +8,8 @@ class CreateRefgoJob < ApplicationJob
       if success
         order.update(status: "Refgo Finish")
       else
-        order.update(status: "Refgo Error") if order.present?
+        order.update(status: "Refgo Error")
       end
+      
     end
 end

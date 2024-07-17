@@ -5,7 +5,7 @@ class Order < ApplicationRecord
     after_destroy_commit { broadcast_remove_to "orders" }
 
     after_commit :api_set_retail_status, only: [:update]
-    after_commit :create_refgo_if_need, only: [:create, :update]
+    # after_commit :create_refgo_if_need, only: [:create, :update]
 
     STATUS = ['New','Process','Finish Retail','Error Retail','Refgo Error','Refgo Finish']
 
@@ -111,10 +111,10 @@ class Order < ApplicationRecord
         end
     end
 
-    def create_refgo_if_need
-        if !self.refgo_num.present?
-            CreateRefgoJob.perform_later(self.id)
-        end
-    end
+    # def create_refgo_if_need
+    #     if !self.refgo_num.present?
+    #         CreateRefgoJob.perform_later(self.id)
+    #     end
+    # end
 
 end
