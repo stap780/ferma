@@ -198,6 +198,8 @@ class Refgo::CreateUpdate < ApplicationService
         goods = []
         low = []
         medium = []
+        convert_goods = true
+        
         @order.api_items_data.each do |item|
             hash = Hash.new
             hash[:name] = item['offer']['name']
@@ -207,9 +209,9 @@ class Refgo::CreateUpdate < ApplicationService
             hash[:cod] = @order.prepaid ? 0 : ( item['quantity'].to_i*item['initialPrice'].to_i )
             hash[:term_condition] = get_term_condition(item)
             hash[:weight] = get_offer_weight(item)
-            goods << hash
-            low << hash if get_term_condition(item) == "low_temperature_18"
-            medium << hash if get_term_condition(item) == "medium_temperature_2_6"
+            goods << hash if !convert_goods
+            low << hash if convert_goods && get_term_condition(item) == "low_temperature_18"
+            medium << hash if convert_goods && get_term_condition(item) == "medium_temperature_2_6"
         end
         
         # if we convert orded goods to "Заморозка"/"Охлажденка"
