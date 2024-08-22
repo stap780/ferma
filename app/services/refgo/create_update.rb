@@ -117,7 +117,7 @@ class Refgo::CreateUpdate < ApplicationService
     def collect_data
         # @error_message << "not create order"
         r_o = @order.api_order_data
-        if r_o["customFields"]["ne_sinkhronizirovat_so_sluzhboi_dostavki_test"] == false
+        if r_o["customFields"] && r_o["customFields"]["ne_sinkhronizirovat_so_sluzhboi_dostavki_test"] == false
             puts "ne_sinkhronizirovat_so_sluzhboi_dostavki_test == false"
             client = @order.api_client_data
             if client.present?
@@ -135,16 +135,7 @@ class Refgo::CreateUpdate < ApplicationService
                     # "order_delivery_interval":"0001-01-01T00:15:00",
                     "comment" => r_o["delivery"]["address"]["text"]
                 }
-                
-                goods = @order.api_items_data.map{|item| 
-                                        {   "name" => item['offer']['name'],
-                                            "sku" => item['offer']['article'], 
-                                            "quantity" => item['quantity'], 
-                                            "price" => item['initialPrice'], 
-                                            "cod" => @order.prepaid ? 0 : ( item['quantity'].to_i*item['initialPrice'].to_i ), 
-                                            "term_condition" => get_term_condition(item), 
-                                            "weight" => get_offer_weight(item) } 
-                                        }
+                goods = collect_goods
 
                 order_data = {
                                 "num" => @order.refgo_num.present? ?  @order.refgo_num : "",
@@ -152,7 +143,7 @@ class Refgo::CreateUpdate < ApplicationService
                                 "region" => "msk",
                                 "ext_num" => r_o["number"],
                                 "barcode" => r_o["number"],
-                                "places" => r_o["customFields"]["kolichestvo_mest"],
+                                "places" => goods.size,#r_o["customFields"]["kolichestvo_mest"],
                                 "cash_on_delivery_plan" => @order.prepaid ? 0 : @order.sum,
                                 "Client" => client_data,
                                 "Sender" => {
@@ -200,9 +191,68 @@ class Refgo::CreateUpdate < ApplicationService
     end
 
     def get_term_condition(item)
-        item["offer"]["properties"].present? && item["offer"]["properties"]["7972219"] == "Заморозка" ? "low_temperature_18" : "free_temperature"
+        item["offer"]["properties"].present? && item["offer"]["properties"]["7972219"] == "Заморозка" ? "low_temperature_18" : "medium_temperature_2_6"
     end
 
+    def collect_goods
+        goods = []
+        low = []
+        medium = []
+        @order.api_items_data.each do |item|
+            hash = Hash.new
+            hash[:name] = item['offer']['name']
+            hash[:sku] = item['offer']['article']
+            hash[:quantity] = item['quantity']
+            hash[:price] = item['initialPrice']       
+            hash[:cod] = @order.prepaid ? 0 : ( item['quantity'].to_i*item['initialPrice'].to_i )
+            hash[:term_condition] = get_term_condition(item)
+            hash[:weight] = get_offer_weight(item)
+            goods << hash
+            low << hash if get_term_condition(item) == "low_temperature_18"
+            medium << hash if get_term_condition(item) == "medium_temperature_2_6"
+        end
+        
+        # if we convert orded goods to "Заморозка"/"Охлажденка"
+        medium_good = {
+                        "name" => "Охлажденка",
+                        "sku" => @order.retail_num, 
+                        "quantity" => 1, 
+                        "price" => 0, 
+                        "cod" => 0, 
+                        "term_condition" => "medium_temperature_2_6", 
+                        "weight" => 5
+                    }
+        low_good = {
+                        "name" => "Заморозка",
+                        "sku" => @order.retail_num,
+                        "quantity" => 1,
+                        "price" => 0,
+                        "cod" => 0,
+                        "term_condition" => "low_temperature_18",
+                        "weight" => 1
+                    }
+
+        if medium.size > 0 && low.size == 0
+            goods << medium_good
+        end
+        if low.size > 0 && medium.size == 0
+            goods << low_good
+        end
+        if medium.size > 0 && low.size > 0
+            goods << medium_good
+            goods << low_good
+        end
+        goods
+        # @order.api_items_data.map{|item| 
+        # {   "name" => item['offer']['name'],
+        #     "sku" => item['offer']['article'], 
+        #     "quantity" => item['quantity'], 
+        #     "price" => item['initialPrice'], 
+        #     "cod" => @order.prepaid ? 0 : ( item['quantity'].to_i*item['initialPrice'].to_i ), 
+        #     "term_condition" => get_term_condition(item), 
+        #     "weight" => get_offer_weight(item) } 
+        # }
+    end
 end
 
     # вариант ниже - это если заголовок "token" нужно передать маленькими буквами (что не стандартно)
