@@ -217,16 +217,18 @@ class Refgo::CreateUpdate < ApplicationService
         # if we convert orded goods to "Заморозка"/"Охлажденка"
         medium_good = {
                         "name" => "Охлажденка",
-                        "sku" => @order.retail_num, 
-                        "quantity" => 1, 
-                        "price" => 0, 
-                        "cod" => 0, 
+                        "sku" => @order.retail_num,
+                        "barcode" => @order.retail_num,
+                        "quantity" => 1,
+                        "price" => 0,
+                        "cod" => 0,
                         "term_condition" => "medium_temperature_2_6", 
                         "weight" => 5
                     }
         low_good = {
                         "name" => "Заморозка",
                         "sku" => @order.retail_num,
+                        "barcode" => @order.retail_num,
                         "quantity" => 1,
                         "price" => 0,
                         "cod" => 0,
