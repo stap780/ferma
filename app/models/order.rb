@@ -102,7 +102,7 @@ class Order < ApplicationRecord
             tarif = self.delivery_price
             if status
                 r_order['status'] = status
-                r_order['netCost'] = tarif
+                r_order['delivery']['netCost'] = tarif
                 result = api.orders_edit(r_order).response
             end
         else 
